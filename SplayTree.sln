@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplayTree", "SplayTree\SplayTree.csproj", "{DBBD78E9-CCF9-42A8-BAC6-7D9436C6F58B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplayTreeTests", "SplayTreeTests\SplayTreeTests.csproj", "{8363DDBA-15C5-4CB5-8ACB-C6691AAD861C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBBD78E9-CCF9-42A8-BAC6-7D9436C6F58B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBBD78E9-CCF9-42A8-BAC6-7D9436C6F58B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBBD78E9-CCF9-42A8-BAC6-7D9436C6F58B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBBD78E9-CCF9-42A8-BAC6-7D9436C6F58B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8363DDBA-15C5-4CB5-8ACB-C6691AAD861C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8363DDBA-15C5-4CB5-8ACB-C6691AAD861C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8363DDBA-15C5-4CB5-8ACB-C6691AAD861C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8363DDBA-15C5-4CB5-8ACB-C6691AAD861C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -24,6 +24,13 @@ namespace SplayTreeTests
             t.Root.Left.Left.Left.Left.Left = createNode(2);
             t.Root.Left.Left.Left.Left.Left.Left = createNode(1);
 
+            t.Root.Left.Parent = t.Root;
+            t.Root.Left.Left.Parent = t.Root.Left;
+            t.Root.Left.Left.Left.Parent = t.Root.Left.Left;
+            t.Root.Left.Left.Left.Left.Parent = t.Root.Left.Left.Left;
+            t.Root.Left.Left.Left.Left.Left.Parent = t.Root.Left.Left.Left.Left;
+            t.Root.Left.Left.Left.Left.Left.Left.Parent = t.Root.Left.Left.Left.Left.Left;
+
             Assert.AreEqual("[7] [6] [5] [4] [3] [2] [1] ", t.ToString());
 
             t.Find(1);

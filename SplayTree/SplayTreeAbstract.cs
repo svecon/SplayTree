@@ -8,11 +8,14 @@ namespace SplayTree
     {
         public SplayNode<T> Root;
 
-        public Dictionary<SplayNode<T>, bool> WasRead = new Dictionary<SplayNode<T>, bool>();
+        public HashSet<SplayNode<T>> WasRead = new HashSet<SplayNode<T>>();
+
+        public bool IgnoreInsert = false;
 
         public class SplayNode<TU> where TU : IComparable<TU>
         {
             public TU Key;
+            public SplayNode<TU> Parent;
             public SplayNode<TU> Left;
             public SplayNode<TU> Right;
 
@@ -34,27 +37,69 @@ namespace SplayTree
             return n;
         }
 
-        protected SplayNode<T> RotateRight(SplayNode<T> u)
+        protected void RotateRight(SplayNode<T> x)
         {
-            var x = u.Left;
-            u.Left = x.Right;
-            x.Right = u;
-            return x;
+            var y = x.Left;
+            if (y != null)
+            {
+                x.Left = y.Right;
+                if (y.Right != null) y.Right.Parent = x;
+                y.Parent = x.Parent;
+            }
+
+            if (x.Parent == null) Root = y;
+            else if (x == x.Parent.Left) x.Parent.Left = y;
+            else x.Parent.Right = y;
+
+            if (y != null) y.Right = x;
+
+            x.Parent = y;
         }
 
-        protected SplayNode<T> RotateLeft(SplayNode<T> x)
+        protected void RotateLeft(SplayNode<T> x)
         {
-            var u = x.Right;
-            x.Right = u.Left;
-            u.Left = x;
-            return u;
+            var y = x.Right;
+            if (y != null)
+            {
+                x.Right = y.Left;
+                if (y.Left != null) y.Left.Parent = x;
+                y.Parent = x.Parent;
+            }
+
+            if (x.Parent == null) Root = y;
+            else if (x == x.Parent.Left) x.Parent.Left = y;
+            else x.Parent.Right = y;
+
+            if (y != null) y.Left = x;
+
+            x.Parent = y;
         }
 
-        protected abstract SplayNode<T> Splay(SplayNode<T> node, T key);
+        protected abstract void Splay(SplayNode<T> node);
+
+        protected SplayNode<T> FindNode(T key)
+        {
+            var current = Root;
+            var previous = current;
+            while (current != null)
+            {
+                previous = current;
+                if (!IgnoreInsert && !WasRead.Contains(current)) { WasRead.Add(current); }
+
+                var cmp = key.CompareTo(current.Key);
+
+                if (cmp < 0) current = current.Left;
+                else if (cmp > 0) current = current.Right;
+                else return current;
+            }
+            return previous;
+        }
 
         public T Find(T key)
         {
-            Root = Splay(Root, key);
+            var node = FindNode(key);
+            Splay(node);
+
             var cmp = key.CompareTo(Root.Key);
 
             if (cmp == 0)
@@ -71,7 +116,8 @@ namespace SplayTree
                 return;
             }
 
-            Root = Splay(Root, key);
+            var node = FindNode(key);
+            Splay(node);
 
             var cmp = key.CompareTo(Root.Key);
             if (cmp < 0)
@@ -79,12 +125,24 @@ namespace SplayTree
                 var newNode = CreateNode(key);
                 newNode.Left = Root.Left;
                 Root.Left = newNode;
+
+                newNode.Parent = Root;
+                if (newNode.Left != null)
+                {
+                    newNode.Left.Parent = newNode;
+                }
             }
             else if (cmp > 0)
             {
                 var newNode = CreateNode(key);
                 newNode.Right = Root.Right;
                 Root.Right = newNode;
+
+                newNode.Parent = Root;
+                if (newNode.Right != null)
+                {
+                    newNode.Right.Parent = newNode;
+                }
             }
             else
             {

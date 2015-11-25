@@ -95,7 +95,17 @@ namespace SplayTree
 
         static void Main(string[] args)
         {
-            var t = new BadSplayTree<ulong>();
+            SplayTreeAbstract<ulong> t;
+            if (args.Length >= 2 && args[1] == "-b")
+            {
+                t = new BadSplayTree<ulong>();
+                Console.WriteLine("{0}: {1}", "Bad splay tree", args[0]);
+            }
+            else
+            {
+                t = new SplayTree<ulong>();
+                Console.WriteLine("{0}: {1}", "Good splay tree", args[0]);
+            }
 
             var statsTouched = 0;
             var nOps = 0;
@@ -117,23 +127,31 @@ namespace SplayTree
                         t.Clear();
                         continue;
                     case OpType.Insert:
+                        t.IgnoreInsert = true;
                         t.Insert(op.Key);
+                        t.IgnoreInsert = false;
                         //TestTree(t);
                         break;
                     case OpType.Find:
                         t.Find(op.Key);
+                        ++nOps;
+                        statsTouched += t.WasRead.Count;
+                        t.WasRead.Clear();
                         //TestTree(t);
                         break;
                 }
 
-                ++nOps;
-                statsTouched += t.WasRead.Count;
-                t.WasRead.Clear();
             }
 
             if (nOps > 0)
             {
                 Console.WriteLine("{0};{1}", n, 1.0 * statsTouched / nOps);
+            }
+
+            if (args.Length >= 3 && args[2] == "-print")
+            {
+                TestTree(t);
+                Console.WriteLine(t);
             }
         }
     }

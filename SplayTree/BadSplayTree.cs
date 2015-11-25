@@ -1,40 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SplayTree
 {
     public class BadSplayTree<T> : SplayTreeAbstract<T> where T : IComparable<T>
     {
-        protected override SplayNode<T> Splay(SplayNode<T> node, T key)
+        protected override void Splay(SplayNode<T> node)
         {
-            if (node == null) return null;
+            if (node == null) throw new Exception("null to splay");
 
-            if (!WasRead.ContainsKey(node)) { WasRead.Add(node, true); }
-
-            var cmp = key.CompareTo(node.Key);
-
-            if (cmp < 0)
+            var x = node;
+            while (x.Parent != null)
             {
-                if (node.Left == null) { return node; }
-
-                node.Left = Splay(node.Left, key);
-                node = RotateRight(node);
-
-                return node;
-            }
-            else if (cmp > 0)
-            {
-                if (node.Right == null)
-                {
-                    return node;
-                }
-
-                node.Right = Splay(node.Right, key);
-                node = RotateLeft(node);
-                return node;
-            }
-            else
-            {
-                return node;
+                if (x.Parent.Left == x)
+                    RotateRight(x.Parent);
+                else
+                    RotateLeft(x.Parent);
             }
         }
     }

@@ -37,45 +37,43 @@ namespace SplayTree
             return n;
         }
 
-        protected void RotateRight(SplayNode<T> x)
+        protected void RotateRight(SplayNode<T> father)
         {
-            var y = x.Left;
-            if (y != null)
+            var son = father.Left;
+            if (son != null)
             {
-                x.Left = y.Right;
-                if (y.Right != null) y.Right.Parent = x;
-                y.Parent = x.Parent;
+                if (son.Right != null) son.Right.Parent = father;
+                father.Left = son.Right;
+                son.Parent = father.Parent;
+                son.Right = father;
             }
 
-            if (x.Parent == null) Root = y;
-            else if (x == x.Parent.Left) x.Parent.Left = y;
-            else x.Parent.Right = y;
+            if (father.Parent == null) Root = son;
+            else if (father == father.Parent.Left) father.Parent.Left = son;
+            else father.Parent.Right = son;
 
-            if (y != null) y.Right = x;
-
-            x.Parent = y;
+            father.Parent = son;
         }
 
-        protected void RotateLeft(SplayNode<T> x)
+        protected void RotateLeft(SplayNode<T> father)
         {
-            var y = x.Right;
-            if (y != null)
+            var son = father.Right;
+            if (son != null)
             {
-                x.Right = y.Left;
-                if (y.Left != null) y.Left.Parent = x;
-                y.Parent = x.Parent;
+                if (son.Left != null) son.Left.Parent = father;
+                father.Right = son.Left;
+                son.Parent = father.Parent;
+                son.Left = father;
             }
 
-            if (x.Parent == null) Root = y;
-            else if (x == x.Parent.Left) x.Parent.Left = y;
-            else x.Parent.Right = y;
+            if (father.Parent == null) Root = son;
+            else if (father == father.Parent.Left) father.Parent.Left = son;
+            else father.Parent.Right = son;
 
-            if (y != null) y.Left = x;
-
-            x.Parent = y;
+            father.Parent = son;
         }
 
-        protected abstract void Splay(SplayNode<T> node);
+        protected abstract void Splay(SplayNode<T> node2);
 
         protected SplayNode<T> FindNode(T key)
         {

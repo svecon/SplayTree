@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace SplayTree
 {
@@ -7,15 +6,12 @@ namespace SplayTree
     {
         protected override void Splay(SplayNode<T> node)
         {
-            if (node == null) throw new Exception("null to splay");
-
-            var x = node;
-            while (x.Parent != null)
+            while (node.Parent != null)
             {
-                if (x.Parent.Left == x)
-                    RotateRight(x.Parent);
+                if (node.Parent.Left == node)
+                    RotateRight(node.Parent);
                 else
-                    RotateLeft(x.Parent);
+                    RotateLeft(node.Parent);
             }
         }
     }

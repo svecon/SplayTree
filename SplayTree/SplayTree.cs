@@ -6,35 +6,32 @@ namespace SplayTree
     {
         protected override void Splay(SplayNode<T> node)
         {
-            if (node == null) throw new Exception("null to splay");
-
-            var x = node;
-            while (x.Parent != null)
+            while (node.Parent != null)
             {
-                if (x.Parent.Parent == null)
+                if (node.Parent.Parent == null)
                 {
-                    if (x.Parent.Left == x) RotateRight(x.Parent);
-                    else RotateLeft(x.Parent);
+                    if (node.Parent.Left == node) RotateRight(node.Parent);
+                    else RotateLeft(node.Parent);
                 }
-                else if (x.Parent.Left == x && x.Parent.Parent.Left == x.Parent)
+                else if (node.Parent.Left == node && node.Parent.Parent.Left == node.Parent)
                 {
-                    RotateRight(x.Parent.Parent);
-                    RotateRight(x.Parent);
+                    RotateRight(node.Parent.Parent);
+                    RotateRight(node.Parent);
                 }
-                else if (x.Parent.Right == x && x.Parent.Parent.Right == x.Parent)
+                else if (node.Parent.Right == node && node.Parent.Parent.Right == node.Parent)
                 {
-                    RotateLeft(x.Parent.Parent);
-                    RotateLeft(x.Parent);
+                    RotateLeft(node.Parent.Parent);
+                    RotateLeft(node.Parent);
                 }
-                else if (x.Parent.Left == x && x.Parent.Parent.Right == x.Parent)
+                else if (node.Parent.Left == node && node.Parent.Parent.Right == node.Parent)
                 {
-                    RotateRight(x.Parent);
-                    RotateLeft(x.Parent);
+                    RotateRight(node.Parent);
+                    RotateLeft(node.Parent);
                 }
                 else
                 {
-                    RotateLeft(x.Parent);
-                    RotateRight(x.Parent);
+                    RotateLeft(node.Parent);
+                    RotateRight(node.Parent);
                 }
             }
         }
